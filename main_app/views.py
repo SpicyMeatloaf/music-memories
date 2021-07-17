@@ -16,12 +16,12 @@ def music_index(request):
 
 class MusicCreate(CreateView):
     model = Music
-    fields = '__all__'
+    fields = ['date_created', 'artist', 'album', 'song', 'genre', 'comments']
     success_url = '/music/'
 
 class MusicUpdate(UpdateView):
     model = Music
-    fields = ['', '']
+    fields = ['artist', 'album', 'song', 'genre', 'comments']
 
 class MusicDelete(DeleteView):
     model = Music

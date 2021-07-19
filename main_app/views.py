@@ -26,3 +26,7 @@ class MusicUpdate(UpdateView):
 class MusicDelete(DeleteView):
     model = Music
     success_url = '/music/'
+
+def music_detail(request, music_id):
+    music = Music.objects.get(id=music_id)
+    return render(request, 'music/detail.html', {'music': music})

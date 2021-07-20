@@ -16,7 +16,7 @@ def music_index(request):
 
 class MusicCreate(CreateView):
     model = Music
-    fields = ['date_created', 'artist', 'album', 'song', 'genre', 'comments']
+    fields = '__all__'
     success_url = '/music/'
 
 class MusicUpdate(UpdateView):

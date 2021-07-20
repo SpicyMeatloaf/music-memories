@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>MusicMemories List</h1>
-    {% for music in musics %}
+    {% for i in music %}
         <div class="card">
-            <a href="{% url 'detail' music.id %}">
+            <a href="{% url 'detail' i.id %}">
                 <div class="card-content">
-                    <span class="card-title">{{ music.song }}</span>
-                    <p>Artist: {{ music.artist }}</p>
-                    <p>Album: {{ music.album }}</p>
-                    <p>Genre: {{ music.genre }}</p>
+                    <span class="card-title">{{ i.song }}</span>
+                    <p>Artist: {{ i.artist }}</p>
+                    <p>Album: {{ i.album }}</p>
+                    <p>Genre: {{ i.genre }}</p>
                   
                 </div>
             </a>

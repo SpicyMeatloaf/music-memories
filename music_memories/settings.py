@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'music_memories.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'music-memories',
+        'NAME': 'music_memories',
     }
 }
 

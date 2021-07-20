@@ -22,6 +22,7 @@ class MusicCreate(CreateView):
 class MusicUpdate(UpdateView):
     model = Music
     fields = ['artist', 'album', 'song', 'genre', 'comments']
+    success_url = '/music/'
 
 class MusicDelete(DeleteView):
     model = Music

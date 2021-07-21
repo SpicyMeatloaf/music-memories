@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from .models import Music, Photo
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from .forms import ListenForm
 
 
 import boto3
@@ -19,6 +20,14 @@ def about(request):
 def music_index(request):
     music = Music.objects.all()
     return render(request, 'music/index.html', {'music': music})
+
+def add_listen(request, music_id):
+    form = ListenForm(request.POST)
+    if form.is_valid():
+        new_listen = form.save(commit=False)
+        new_listen.music_id = music_id
+        new_listen.save()
+    return redirect('detail', music_id=music_id)
 
 class MusicCreate(CreateView):
     model = Music

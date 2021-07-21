@@ -33,6 +33,30 @@
         </form>
 
     </div>
+<!-- markup for adding way listened -->
+    <div class="col s6">
+        <!-- <form action="{% url 'add_listen' music.id %}" method="POST">
+            {% csrf_token %}
+            {{ listen_form.as_p }}
+            <input type="submit" class="btn" value="Add Way Listened">
+        </form> -->
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Date Listened</th>
+                    <th>Way Listened</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for listen in music.listen_set.all %}
+                <tr>
+                    <td>{{ listen.date }}</td>
+                    <td>{{ listen.get_listening_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 </div>
 

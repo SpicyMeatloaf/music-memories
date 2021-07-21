@@ -11,5 +11,6 @@ urlpatterns = [
     path('music/<int:music_id>/', views.music_detail, name='detail'),
     # adds photo
     path('music/<int:music_id>/add_photo', views.add_photo, name='add_photo'),
-    
+    # adds date/way of listen
+    path('music/<int:music_id>/add_listen', views.add_listen, name='add_listen'),
 ]

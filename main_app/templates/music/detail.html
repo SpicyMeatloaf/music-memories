@@ -19,6 +19,19 @@
             </div>
         </div>
         
+        {% for photo in music.photo_set.all %}
+            <img src="{{photo.url}}" alt="{{music.song}}" class="responsive-img card-panel">
+        {% empty %}
+            <div class="card-panel teal-text center-align">No Photo Memories Uploaded</div>
+        {% endfor %}
+        <form class="card-panel" action="{% url 'add_photo' music.id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="photo-file">
+            <br>
+            <br>
+            <input type="submit" class="btn" value="Upload Photo">
+        </form>
+
     </div>
 
 </div>

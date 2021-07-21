@@ -19,3 +19,10 @@ class Music(models.Model):
             return self.album
         else:
             return self.artist
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    music = models.ForeignKey(Music, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for music_id: {self.music_id} @{self.url}"

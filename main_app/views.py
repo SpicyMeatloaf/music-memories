@@ -1,7 +1,14 @@
-from django.shortcuts import render
-from .models import Music
+from django.shortcuts import redirect, render
+from .models import Music, Photo
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from .forms import ListenForm
 
+
+import boto3
+import uuid
+
+S3_BASE_URL = 'http://s3.us-east-1.amazonaws.com/'
+BUCKET = 'music-memories-p4'
 # Create your views here.
 
 def home(request):
@@ -13,6 +20,14 @@ def about(request):
 def music_index(request):
     music = Music.objects.all()
     return render(request, 'music/index.html', {'music': music})
+
+def add_listen(request, music_id):
+    form = ListenForm(request.POST)
+    if form.is_valid():
+        new_listen = form.save(commit=False)
+        new_listen.music_id = music_id
+        new_listen.save()
+    return redirect('detail', music_id=music_id)
 
 class MusicCreate(CreateView):
     model = Music
@@ -31,3 +46,18 @@ class MusicDelete(DeleteView):
 def music_detail(request, music_id):
     music = Music.objects.get(id=music_id)
     return render(request, 'music/detail.html', {'music': music})
+
+def add_photo(request, music_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            photo = Photo(url=url, music_id=music_id)
+            photo.save()
+        except Exception as error:
+            print('An error occured uploading file to S3')
+            print(error)
+    return redirect('detail', music_id=music_id)

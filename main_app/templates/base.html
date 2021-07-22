@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>MusicMemories</title>
 </head>
@@ -26,7 +26,10 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'index' %}">View All My Entries</a>
+                        <a href="{% url 'all_index' %}">View All Entries</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'user_index' %}">View My Entries</a>
                     </li>
                     <li>
                         <a href="{% url 'music_create' %}">Add A Memory</a>

@@ -61,4 +61,23 @@
 </div>
 
 
+<script>
+    //Constants
+    const dateEl = document.getElementById('id_date');
+    const selectEl = document.getElementById('id_listening');
+
+    //Configure the datepicker
+
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        default: new Date(),
+        setDefault: true,
+        autoClose: true,
+    });
+
+    //Configure the select tag
+    M.FormSelect.init(selectEl);
+</script>
+
+
 {% endblock %}

@@ -4,7 +4,8 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .forms import ListenForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 import boto3
 import uuid
@@ -19,8 +20,9 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def music_index(request):
-    music = Music.objects.all()
+    music = Music.objects.filter(user=request.user)
     return render(request, 'music/index.html', {'music': music})
 
 def add_listen(request, music_id):
@@ -31,20 +33,25 @@ def add_listen(request, music_id):
         new_listen.save()
     return redirect('detail', music_id=music_id)
 
-class MusicCreate(CreateView):
+class MusicCreate(LoginRequiredMixin, CreateView):
     model = Music
-    fields = '__all__'
+    fields = ['date_created', 'artist', 'album', 'song', 'genre', 'comments']
     success_url = '/music/'
 
-class MusicUpdate(UpdateView):
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class MusicUpdate(LoginRequiredMixin, UpdateView):
     model = Music
     fields = ['artist', 'album', 'song', 'genre', 'comments']
     success_url = '/music/'
 
-class MusicDelete(DeleteView):
+class MusicDelete(LoginRequiredMixin, DeleteView):
     model = Music
     success_url = '/music/'
 
+@login_required
 def music_detail(request, music_id):
     music = Music.objects.get(id=music_id)
     listen_form = ListenForm()

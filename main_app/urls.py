@@ -13,4 +13,6 @@ urlpatterns = [
     path('music/<int:music_id>/add_photo', views.add_photo, name='add_photo'),
     # adds date/way of listen
     path('music/<int:music_id>/add_listen', views.add_listen, name='add_listen'),
+
+    path('accounts/signup/', views.signup, name='signup'),
 ]

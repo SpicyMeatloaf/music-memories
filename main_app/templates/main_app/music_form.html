@@ -15,4 +15,14 @@
     <input class="btn" type="submit" value="Submit">
 </form>
 
+<script>
+    var dateEl = document.getElementById('id_date_created');
+    M.Datepicker.init(dateEl, {
+      format: 'yyyy-mm-dd',
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      autoClose: true
+    });
+</script>
+
 {% endblock %}

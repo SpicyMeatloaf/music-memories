@@ -25,6 +25,10 @@ def music_index(request):
     music = Music.objects.filter(user=request.user)
     return render(request, 'music/index.html', {'music': music})
 
+def all_index(request):
+    music = Music.objects.all()
+    return render(request, 'music/all_index.html', {'music': music})
+
 def add_listen(request, music_id):
     form = ListenForm(request.POST)
     if form.is_valid():

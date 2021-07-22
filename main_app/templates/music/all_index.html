@@ -1,13 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-<<<<<<< HEAD
-    <h1>MusicMemories List</h1>
-    {% for i in music %} 
-=======
-<h1 class="page-title">My MusicMemories</h1>
-<div class="cards">
+
+<h1 class="page-title">Browse MusicMemories</h1>
+    <div class="cards">
     {% for i in music %}
->>>>>>> 4a69813b57357e869084c655dfc506a3c1cde25f
         <div class="card">
             {% if i.photo_set.all %}
                 <img class="card" src="{{ i.photo_set.all.first.url }}">
@@ -16,15 +12,17 @@
             {% endif %}
             <a href="{% url 'detail' i.id %}">
                 <div class="card-content">
-                    <span class="card-title">{{ i.date_created }}</span>
+                    <span class="card-title">{{ i.user }}</span>
+                    <p>{{ i.date_created }}</p>
                     <p>Artist: {{ i.artist }}</p>
                     <p>Album: {{ i.album }}</p>
                     <p>Song: {{ i.song }}</p>
                     <p>Genre: {{ i.genre }}</p>
+                  
                 </div>
             </a>
-        </div>  
+        </div>
     {% endfor %}
-</div>
+    </div>
 
 {% endblock %}

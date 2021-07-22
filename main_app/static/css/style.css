@@ -8,22 +8,52 @@ main{
     flex-grow: 1;
 }
 
+nav, .page-footer {
+    background-color: #88acb6;
+}
+
 footer{
     padding-top: 0;
+    padding-right: 5px;
     text-align: right;
-    color: black;
 }
 
 .home{
     text-align: center;
 }
 
-.card {
-    width: 400px;
+.page-title {
+    font-size: 42px;
+    color: white;
+    background-color: #88acb6;
+    box-shadow: 5px 5px lightsteelblue;
+    text-align: center;
 }
 
-img {
+main.container {
+    width: 90vw;
+}
+
+div.cards {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.card {
+    width: 400px;
+    display: inline-block;
+}
+
+img.card {
     width: 400px;
     height: 400px;
     object-fit: cover;
+    margin-top: 0px;
+}
+
+img.logo {
+    height: 75vh;
+    margin: 5vh auto 5vh auto;
 }

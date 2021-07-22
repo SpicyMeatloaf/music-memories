@@ -23,7 +23,7 @@
         {% for photo in music.photo_set.all %}
             <img src="{{photo.url}}" alt="{{music.song}}" class="responsive-img card-panel">
         {% empty %}
-            <div class="card-panel teal-text center-align">No Photo Memories Uploaded</div>
+            <div class="card-panel teal-text center-align">No Memory Images Uploaded</div>
         {% endfor %}
         <form class="card-panel" action="{% url 'add_photo' music.id %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -36,11 +36,11 @@
     </div>
 <!-- markup for adding way listened -->
     <div class="col s6">
-        <!-- <form action="{% url 'add_listen' music.id %}" method="POST">
+        <form action="{% url 'add_listen' music.id %}" method="POST">
             {% csrf_token %}
             {{ listen_form.as_p }}
             <input type="submit" class="btn" value="Add Way Listened">
-        </form> -->
+        </form>
         <table class="striped">
             <thead>
                 <tr>
@@ -60,6 +60,26 @@
     </div>
 
 </div>
+
+
+<script>
+    //Constants
+    const dateEl = document.getElementById('id_date');
+    const selectEl = document.getElementById('id_listening');
+
+    //Configure the datepicker
+
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        default: new Date(),
+        setDefault: true,
+        autoClose: true,
+    });
+    
+
+    //Configure the select tag
+    M.FormSelect.init(selectEl);
+</script>
 
 
 {% endblock %}

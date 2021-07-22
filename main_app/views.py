@@ -45,7 +45,10 @@ class MusicDelete(DeleteView):
 
 def music_detail(request, music_id):
     music = Music.objects.get(id=music_id)
-    return render(request, 'music/detail.html', {'music': music})
+    listen_form = ListenForm()
+    return render(request, 'music/detail.html', {
+        'music': music,
+        'listen_form': listen_form,})
 
 def add_photo(request, music_id):
     photo_file = request.FILES.get('photo-file', None)

@@ -4,7 +4,8 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
-    path('music/', views.music_index, name='index'),
+    path('music/', views.music_index, name='user_index'),
+    path('music/all', views.all_index, name='all_index'),
     path('music/create/', views.MusicCreate.as_view(), name='music_create'),
     path('music/<int:pk>/update/', views.MusicUpdate.as_view(), name='music_update'),
     path('music/<int:pk>/delete/', views.MusicDelete.as_view(), name='music_delete'),

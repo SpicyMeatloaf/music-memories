@@ -26,7 +26,10 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'index' %}">View All My Entries</a>
+                        <a href="{% url 'all_index' %}">View All Entries</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'user_index' %}">View My Entries</a>
                     </li>
                     <li>
                         <a href="{% url 'music_create' %}">Add A Memory</a>

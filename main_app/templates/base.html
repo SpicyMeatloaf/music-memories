@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link id="mystylesheet" rel="stylesheet" href="{% static 'css/light.css' %}" cssLink.typ="MIME">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>MusicMemories</title>
 </head>
@@ -34,6 +34,14 @@
                     <li>
                         <a href="{% url 'music_create' %}">Add A Memory</a>
                     </li>
+                    <button class="btn btn-light" onclick="swapStyle('static/css/light.css')">Light Mode</button>
+                    <button class="btn btn-dark" onclick="swapStyle('static/css/dark.css')">Dark Mode</button>
+                    <!-- <li>
+                        <a href="{% static 'css/light.css' %}">Light Mode</a>
+                    </li>
+                    <li>
+                        <a href="{% static 'css/dark.css' %}">Dark Mode</a>
+                    </li> -->
                     <li>
                         <a href="{% url 'logout' %}">Logout</a>
                     </li>
@@ -56,5 +64,25 @@
     <footer class="page-footer">
         <div class="right">All Rights Reserved, &copy; 2021 MusicMemories</div>
     </footer>
+
+    <!-- Script attempting DarkMode -->
+<script type="text/javascript"> 
+
+    var setTheme = localStorage.getItem('theme')
+    console.log('theme', setTheme)
+        if (setTheme == null){
+            swapStyles(light.css)
+        }else{
+            swapStyle(setTheme)
+        }
+     function swapStyle(sheet){
+        document.getElementById('mystylesheet').href = sheet
+        localStorage.setItem('theme', sheet)
+    }
+    
+    
+    
+   
+    </script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -16,4 +18,8 @@ urlpatterns = [
     path('music/<int:music_id>/add_listen', views.add_listen, name='add_listen'),
 
     path('accounts/signup/', views.signup, name='signup'),
+
+    #adds favicon 
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('img/favicon.ico'))),
+
 ]

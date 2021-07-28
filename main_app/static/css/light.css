@@ -57,3 +57,21 @@ img.logo {
     height: 75vh;
     margin: 5vh auto 5vh auto;
 }
+
+.btn-light{
+    background-color: #88acb6;
+}
+
+.btn-dark{
+    background-color: #1f282b;
+}
+
+.btn-light:hover{
+    background-color: #a6d2df;
+    color: #88acb6;
+}
+
+.btn-dark:hover{
+    background-color: #42555c;
+    color: #1f282b;
+}

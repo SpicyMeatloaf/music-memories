@@ -1,1 +1,1 @@
-web: gunicorn music-memories.wsgi
+web: gunicorn music_memories.wsgi

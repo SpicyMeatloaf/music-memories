@@ -92,7 +92,7 @@ def music_detail(request, music_id):
         elif (music.type == "B"):
             music.spotify_uri = result['albums']['items'][0]['external_urls']['spotify']
         else:
-            music.spotify_uri = result['artist']['items'][0]['external_urls']['spotify']
+            music.spotify_uri = result['artists']['items'][0]['external_urls']['spotify']
 
     return render(request, 'music/detail.html', {
         'music': music,

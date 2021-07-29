@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from spotipy.client import Spotify
 from .models import Music, Photo
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .forms import ListenForm
@@ -6,19 +7,43 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from dotenv import load_dotenv
 import boto3
 import uuid
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
+import os
 
 S3_BASE_URL = 'http://s3.us-east-1.amazonaws.com/'
 BUCKET = 'music-memories-p4'
-# Create your views here.
 
 def home(request):
     return render(request, 'home.html')
 
 def about(request):
     return render(request, 'about.html')
+
+def get_spotify_auth():
+    load_dotenv()
+    CLIENT_ID = os.environ.get('CLIENT_ID')
+    CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+    client_credentials_manager = SpotifyClientCredentials(CLIENT_ID, CLIENT_SECRET)
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    return sp
+
+def search_spotify_api(sp, music):
+    if (music.type == 'T'):
+        q = music.song
+        type = 'track'
+    elif (music.type == 'B'):
+        q = music.album
+        type = 'album'
+    else:
+        q = music.artist
+        type ='artist'
+
+    results = sp.search(q, limit=1, type=type, market='US')
+    return results
 
 @login_required
 def music_index(request):
@@ -59,6 +84,16 @@ class MusicDelete(LoginRequiredMixin, DeleteView):
 def music_detail(request, music_id):
     music = Music.objects.get(id=music_id)
     listen_form = ListenForm()
+    sp = get_spotify_auth()
+    if not music.spotify_uri:
+        result = search_spotify_api(sp, music)
+        if (music.type == "T"):
+            music.spotify_uri = result['tracks']['items'][0]['external_urls']['spotify']
+        elif (music.type == "B"):
+            music.spotify_uri = result['albums']['items'][0]['external_urls']['spotify']
+        else:
+            music.spotify_uri = result['artists']['items'][0]['external_urls']['spotify']
+
     return render(request, 'music/detail.html', {
         'music': music,
         'listen_form': listen_form,})

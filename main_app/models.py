@@ -13,15 +13,27 @@ LISTENED = (
     ('S','Spotify'),
 )
 
+TYPE = (
+    ('A', 'Artist'),
+    ('B', 'Album'),
+    ('T', 'Track'),
+)
+
 
 class Music(models.Model):
     date_created = models.DateField()
     artist = models.CharField(max_length=100)
-    album = models.CharField(max_length=100)
-    song = models.CharField(max_length=100)
-    genre = models.CharField(max_length=100)
-    comments = models.CharField(max_length=1000)
+    album = models.CharField(max_length=100, blank=True, null=True)
+    song = models.CharField(max_length=100, blank=True, null=True)
+    genre = models.CharField(max_length=100, blank=True, null=True)
+    comments = models.CharField(max_length=1000, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.CharField(
+        max_length=1,
+        choices=TYPE,
+        default=TYPE[2][0],
+    )
+    spotify_uri = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         if (self.song):

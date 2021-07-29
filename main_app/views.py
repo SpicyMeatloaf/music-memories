@@ -32,18 +32,40 @@ def get_spotify_auth():
     return sp
 
 def search_spotify_api(sp, music):
-    if (music.type == 'T'):
-        q = music.song
-        type = 'track'
-    elif (music.type == 'B'):
-        q = music.album
-        type = 'album'
-    else:
-        q = music.artist
-        type ='artist'
+    try:
+        if (music.type == 'T'):
+            q = music.song
+            type = 'track'
+        elif (music.type == 'B'):
+            q = music.album
+            type = 'album'
+        else:
+            q = music.artist
+            type ='artist'
 
-    results = sp.search(q, limit=1, type=type, market='US')
-    return results
+        results = sp.search(q, limit=1, type=type, market='US')
+        return results
+    except:
+        return None
+
+def get_spotify_fields(music):
+    sp = get_spotify_auth()
+
+    try:
+        if not music.spotify_uri:
+            result = search_spotify_api(sp, music)
+            if (music.type == "T"):
+                music.spotify_uri = result['tracks']['items'][0]['uri']
+                music.spotify_url = result['tracks']['items'][0]['external_urls']['spotify']
+            elif (music.type == "B"):
+                music.spotify_uri = result['albums']['items'][0]['uri']
+                music.spotify_uri = result['albums']['items'][0]['external_urls']['spotify']
+            else:
+                music.spotify_uri = result['artists']['items'][0]['uri']
+                music.spotify_uri = result['artists']['items'][0]['external_urls']['spotify']
+    except:
+        music.spotify_uri = None
+        music.spotify_url = None
 
 @login_required
 def music_index(request):
@@ -84,15 +106,8 @@ class MusicDelete(LoginRequiredMixin, DeleteView):
 def music_detail(request, music_id):
     music = Music.objects.get(id=music_id)
     listen_form = ListenForm()
-    sp = get_spotify_auth()
-    if not music.spotify_uri:
-        result = search_spotify_api(sp, music)
-        if (music.type == "T"):
-            music.spotify_uri = result['tracks']['items'][0]['external_urls']['spotify']
-        elif (music.type == "B"):
-            music.spotify_uri = result['albums']['items'][0]['external_urls']['spotify']
-        else:
-            music.spotify_uri = result['artists']['items'][0]['external_urls']['spotify']
+
+    get_spotify_fields(music)
 
     return render(request, 'music/detail.html', {
         'music': music,

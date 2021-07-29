@@ -11,7 +11,9 @@
                 <p>Artist: {{ music.artist }}</p>
                 <p>Genre: {{ music.genre }}</p>
                 <p>Comments: {{ music.comments }}</p>
-                <a href="{{ music.spotify_uri }}">View on Spotify</a>
+                {% if music.spotify_url %}
+                    <a href="{{ music.spotify_url }}">View on Spotify</a>
+                {% endif %}
 
                
             </div>

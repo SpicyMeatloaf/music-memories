@@ -34,6 +34,7 @@ class Music(models.Model):
         default=TYPE[2][0],
     )
     spotify_uri = models.CharField(max_length=100, blank=True, null=True)
+    spotify_url = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         if (self.song):

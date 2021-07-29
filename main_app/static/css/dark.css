@@ -63,24 +63,24 @@ img.logo {
 
 .btn-light{
     background-color: #88acb6;
+    max-width: 60px;
+    position: relative;
+    padding: 0px 25px;
     text-align: center;
-    justify-content: center;
 }
 
 .btn-dark{
     background-color: #1f282b;
-    justify-content: center;
-    max-height: fit-content;
-    max-width: fit-content;
+    max-width: 60px;
+    position: relative;
+    padding: 0px 25px;
+    text-align: center;
 }
 
 .material-icons{
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    max-width: fit-content;
-    max-height: fit-content;
-    
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .btn-light:hover{

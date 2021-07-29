@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from spotipy.client import Spotify
 from .models import Music, Photo
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .forms import ListenForm
@@ -6,13 +7,15 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from dotenv import load_dotenv
 import boto3
 import uuid
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
+import os
 
 S3_BASE_URL = 'http://s3.us-east-1.amazonaws.com/'
 BUCKET = 'music-memories-p4'
-# Create your views here.
 
 def home(request):
     return render(request, 'home.html')
@@ -20,10 +23,34 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+def get_spotify_auth(request):
+    load_dotenv()
+    CLIENT_ID = os.environ.get('client-id')
+    CLIENT_SECRET = os.environ.get('client_secret')
+    client_credentials_manager = SpotifyClientCredentials(CLIENT_ID, CLIENT_SECRET)
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    return sp
+
+def search_spotify_api(sp, music):
+    if music.song:
+        q = music.song
+        type = 'song'
+    elif music.album:
+        q = music.album
+        type = 'album'
+    else:
+        q = music.artist
+        type ='artist'
+
+    results = sp.Search(q, limit=1, type=type, market='US')
+    return results
+
 @login_required
 def music_index(request):
     music = Music.objects.filter(user=request.user)
+    sp = spotipy.Spotify()
     return render(request, 'music/index.html', {'music': music})
+
 
 def all_index(request):
     music = Music.objects.all()

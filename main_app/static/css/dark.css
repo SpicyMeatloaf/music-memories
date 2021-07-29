@@ -6,6 +6,7 @@ body{
 
 main{
     flex-grow: 1;
+    width: 100%;
     background-color: #42555c;
     color:#009688;
 }
@@ -33,11 +34,11 @@ footer{
 }
 
 main.container {
-    width: 90vw;
+    width: 100vw;
 }
 
 div.cards {
-    width: 100%;
+    width: 100vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;

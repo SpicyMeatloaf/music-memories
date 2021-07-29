@@ -2,7 +2,7 @@ MusicMemories
 ==============
 An app that allows users to keep track of the songs, albums, and artists that they’re listening to each day, along with personal notes to create long lasting memories, a veritable music journal customizable to your tastes.
 
-![MusicMemories, Your Journal of Sound!](./main_app/static/img/Music.png) "MusicMemories")
+![MusicMemories, Your Journal of Sound!](./main_app/static/img/Music.png "MusicMemories")
 
 Technologies
 ------------

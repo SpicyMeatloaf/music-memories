@@ -7,7 +7,7 @@ body{
 main{
     flex-grow: 1;
     background-color: #42555c;
-    color:white;
+    color:#009688;
 }
 
 nav, .page-footer {

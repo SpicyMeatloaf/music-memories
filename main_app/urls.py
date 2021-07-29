@@ -3,6 +3,8 @@ from . import views
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 
+app_name = 'frontend'
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),

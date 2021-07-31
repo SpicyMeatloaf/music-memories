@@ -17,10 +17,12 @@
 
                
             </div>
+            {% if user == music.user %}
             <div class="card-action">
                 <a href="{% url 'music_update' music.id%}">Edit</a>
                 <a href="{% url 'music_delete' music.id%}">Delete</a>
             </div>
+            {% endif %}
         </div>
         
         {% for photo in music.photo_set.all %}
@@ -28,6 +30,7 @@
         {% empty %}
             <div class="card-panel teal-text center-align">No Memory Images Uploaded</div>
         {% endfor %}
+        {% if user == music.user %}
         <form class="card-panel" action="{% url 'add_photo' music.id %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" name="photo-file">
@@ -35,15 +38,18 @@
             <br>
             <input type="submit" class="btn" value="Upload Photo">
         </form>
+        {% endif %}
 
     </div>
 <!-- markup for adding way listened -->
     <div class="col s6">
+        {% if user == music.user %}
         <form action="{% url 'add_listen' music.id %}" method="POST">
             {% csrf_token %}
             {{ listen_form.as_p }}
             <input type="submit" class="btn" value="Add Way Listened">
         </form>
+        {% endif %}
         <table class="striped">
             <thead>
                 <tr>
